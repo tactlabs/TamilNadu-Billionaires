@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<!-- 
+        source:
+
+       
+        
+    -->
+
+<head>
+    <title>Tamil Nadu Billionaires</title>
+
+
+    <style>
+            #container {
+            height: 400px; 
+            min-width: 310px; 
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+
+    <div id="container"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+
+    <!-- Custom script comes here-->
+    <script>
+
+    $( document ).ready(function() {
+            // console.log( "ready!" );
+
+            get_data();
+    });
+
+    function get_data(){
+
+        url = "/api/data"
+
+        var myusername = $("#username").val();
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: myusername,
+            cache: false,
+            success: function(data){
+                // $("#resultarea").text(data);
+                console.log(data);
+
+                plot_chart(data);
+            }
+        });
+    } //- get data
+
+
+    function plot_chart(data){
+
+        Highcharts.chart('container', {
+    chart: {
+        type: 'bar'
+    },
+    title: {
+            text: 'Tamil Nadu Billionaires - Worth in Dollars '
+        },
+    
+    xAxis:{
+        title: {
+        text: 'Net Worth(in $)'
+        },
+        categories: ['Ananda Krishnan', 'Senapathy Kris Gopalakrishnan',  'Kalanithi Maran', ' A. Vellayan','Shiv Nadar', 'Ram Shriram']
+        },
+        legend: {
+            layout: 'vertical',
+            floating: true,
+            backgroundColor: '#FFFFFF',
+            align: 'right',
+            verticalAlign: 'top',
+            y: 60,
+            x: -60
+        },
+        tooltip: {
+            headerFormat: '<b>{series.name}</b><br/>',
+            pointFormat: '{point.category}: {point.y}'
+        },
+        series: [{
+            name: 'Names',
+            data: [580, 340, 250, 81, 2530, 250]
+        }]
+        }); 
+    }
+    </script>
+
+</body>
+
+</html>
